@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Medical Bill Analyzer | SwasthSaathi</title>
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --primary-dark: #1565c0;
+            --secondary: #26a69a;
+            --accent: #ff7043;
+            --light: #f5f5f5;
+            --dark: #333;
+            --danger: #e53935;
+            --success: #43a047;
+            --warning: #ffb300;
+            --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font);
+            line-height: 1.6;
+            color: var(--dark);
+            background: #f9f9f9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1976d2, #64b5f6);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* Language selector */
+        .language-selector {
+            position: relative;
+            margin-left: 15px;
+        }
+
+        .language-selector select {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background: white;
+            appearance: none;
+            padding-right: 25px;
+        }
+
+        .language-selector:after {
+            content: '▼';
+            font-size: 10px;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* Health coin indicator */
+        .health-coins {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+            color: var(--warning);
+        }
+
+        /* Page header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), #64b5f6);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+        }
+
+        .page-header h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+
+        /* Bill analyzer section */
+        .bill-analyzer {
+            padding: 50px 0;
+        }
+
+        .analyzer-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            padding: 30px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Upload area */
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+        }
+
+        .upload-area i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .upload-area h3 {
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .upload-btn {
+            margin-bottom: 15px;
+        }
+
+        .supported-formats {
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Manual entry form */
+        .manual-entry-form {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Medicine list */
+        .medicine-list {
+            margin-bottom: 20px;
+        }
+
+        .medicine-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .medicine-item .remove-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .add-medicine-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            background: var(--light);
+            border: 1px dashed #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-medicine-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Analysis result */
+        .analysis-result {
+            margin-top: 40px;
+            display: none;
+        }
+
+        .result-header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .result-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .summary-card i {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .unnecessary-meds i {
+            color: var(--danger);
+        }
+
+        .overpriced-meds i {
+            color: var(--warning);
+        }
+
+        .savings i {
+            color: var(--success);
+        }
+
+        .summary-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .summary-card p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .medicines-analysis {
+            margin-bottom: 30px;
+        }
+
+        .medicine-category {
+            margin-bottom: 20px;
+        }
+
+        .medicine-category h3 {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .medicine-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .medicine-table th,
+        .medicine-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .medicine-table th {
+            background: var(--light);
+            font-weight: 500;
+        }
+
+        .medicine-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .medicine-flag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .flag-unnecessary {
+            background: var(--danger);
+        }
+
+        .flag-overpriced {
+            background: var(--warning);
+        }
+
+        .flag-commission {
+            background: var(--primary);
+        }
+
+        .alternatives {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .alternative-item {
+            display: block;
+            color: var(--success);
+            margin-bottom: 3px;
+        }
+
+        .save-report-btn {
+            margin-right: 10px;
+        }
+
+        /* How it works section */
+        .how-it-works {
+            background: var(--light);
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .step {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 60px 0;
+        }
+
+        .testimonial-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-content {
+            position: relative;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* FAQ section */
+        .faq {
+            background: var(--light);
+            padding: 60px 0;
+        }
+
+        .accordion {
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .accordion-header {
+            background: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header h3 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .accordion-content {
+            background: white;
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content-inner {
+            padding: 20px 0;
+        }
+
+        .accordion.active .accordion-content {
+            max-height: 500px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: #bdbdbd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-bottom p {
+            color: #bdbdbd;
+            font-size: 0.9rem;
+        }
+
+
+        /* Responsive */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <!-- Header -->
+     <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="./Images/logo.png" alt="Wellness Logo">
+                    <h1>Wellness</h1>
+                </a>
+                <button class="mobile-menu-btn">☰</button>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="chat.html">AI Assistant</a>
+                    <a href="health-library.html">Health Library</a>
+                    <a href="insurance.html">Insurance</a>
+                    <a href="emergency.html">Emergency</a>
+                    <a href="bill-analyser.html">Bill Analyser</a>
+                    <div class="health-coins">
+                        <span>🪙</span>
+                        <span>120</span>
+                    </div>
+                    <div class="language-selector">
+                        <select id="language">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="mr">मराठी</option>
+                        </select>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Healthcare for Everyone, Everywhere</h2>
+            <p>Access affordable healthcare solutions, connect with doctors in your language, and earn rewards for staying healthy. Wellness is your companion for a healthier life.</p>
+            <div class="hero-buttons">
+                <a href="chat.html" class="btn">Talk to AI Health Assistant</a>
+                <a href="insurance.html" class="btn btn-outline">Get Micro-Insurance from ₹10/month</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bill Analyzer Section -->
+    <section class="bill-analyzer">
+        <div class="container">
+            <div class="analyzer-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="upload">Upload Bill</div>
+                    <div class="tab" data-tab="manual">Manual Entry</div>
+                    <div class="tab" data-tab="history">Analysis History</div>
+                </div>
+                
+                <div class="tab-content active" id="upload-tab">
+                    <div class="upload-area" id="dropzone">
+                        <i class="fas fa-file-medical"></i>
+                        <h3>Upload your prescription or medical bill</h3>
+                        <p>Drag and drop your file here, or click the button below</p>
+                        <input type="file" id="file-upload" hidden>
+                        <button class="btn upload-btn" onclick="document.getElementById('file-upload').click()">Choose File</button>
+                        <p class="supported-formats">Supported formats: JPG, PNG, PDF</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p>or take a photo with your camera</p>
+                        <button class="btn btn-outline" style="margin-top: 10px;">
+                            <i class="fas fa-camera"></i> Take Photo
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="manual-tab">
+                    <div class="manual-entry-form">
+                        <div class="form-group">
+                            <label for="doctor-name">Doctor Name (Optional)</label>
+                            <input type="text" id="doctor-name" class="form-control" placeholder="Dr. Sharma">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hospital-name">Hospital/Clinic Name (Optional)</label>
+                            <input type="text" id="hospital-name" class="form-control" placeholder="City Hospital">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="diagnosis">Diagnosis/Condition (Optional)</label>
+                            <input type="text" id="diagnosis" class="form-control" placeholder="Common cold, Diabetes, etc.">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Prescribed Medicines</label>
+                            <div class="medicine-list" id="medicine-list">
+                                <div class="medicine-item">
+                                    <div style="flex: 1;">
+                                        <input type="text" class="form-control" placeholder="Medicine Name" style="margin-bottom: 10px;">
+                                        <div style="display: flex; gap: 10px;">
+                                            <input type="text" class="form-control" placeholder="Dosage (e.g., 500mg)" style="flex: 1;">
+                                            <input type="text" class="form-control" placeholder="Price (₹)" style="flex: 1;">
+                                        </div>
+                                    </div>
+                                    <button class="remove-btn"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                            
+                            <button class="add-medicine-btn" id="add-medicine">
+                                <i class="fas fa-plus"></i> Add Another Medicine
+                            </button>
+                        </div>
+                        
+                        <div class="form-group" style="text-align: center;">
+                            <button class="btn" id="analyze-btn" style="min-width: 200px;">Analyze Prescription</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="history-tab">
+                    <div style="text-align: center; padding: 30px 0;">
+                        <i class="fas fa-history" style="font-size: 48px; color: #ccc; margin-bottom: 20px;"></i>
+                        <h3>Your Analysis History</h3>
+                        <p>Login to view your previous bill analyses</p>
+                        <button class="btn" style="margin-top: 20px;">Login to View History</button>
+                    </div>
+                </div>
+                
+                <!-- Analysis Result Section (Initially Hidden) -->
+                <div class="analysis-result" id="analysis-result">
+                    <div class="result-header">
+                        <h2>Analysis Complete</h2>
+                        <p>We've analyzed your prescription and found potential savings</p>
+                    </div>
+                    
+                    <div class="result-summary">
+                        <div class="summary-card unnecessary-meds">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h3>Unnecessary Medicines</h3>
+                            <p>3</p>
+                        </div>
+                        
+                        <div class="summary-card overpriced-meds">
+                            <i class="fas fa-tags"></i>
+                            <h3>Overpriced Medicines</h3>
+                            <p>2</p>
+                        </div>
+                        
+                        <div class="summary-card savings">
+                            <i class="fas fa-rupee-sign"></i>
+                            <h3>Potential Savings</h3>
+                            <p>₹780</p>
+                        </div>
+                    </div>
+                    
+                    <div class="medicines-analysis">
+                        <div class="medicine-category">
+                            <h3>Unnecessary Medicines</h3>
+                            <table class="medicine-table">
+                                <thead>
+                                    <tr>
+                                        <th>Medicine</th>
+                                        <th>Price</th>
+                                        <th>Issue</th>
+                                        <th>Recommendation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Althrocin 500mg</td>
+                                        <td>₹280</td>
+                                        <td><span class="medicine-flag flag-unnecessary">Unnecessary</span></td>
+                                        <td>Not required for viral infections like common cold</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vitamin B Complex</td>
+                                        <td>₹150</td>
+                                        <td><span class="medicine-flag flag-unnecessary">Unnecessary</span></td>
+                                        <td>Not needed unless blood tests show deficiency</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pantocid 40mg</td>
+                                        <td>₹120</td>
+                                        <td><span class="medicine-flag flag-unnecessary">Unnecessary</span></td>
+                                        <td>Not required for this condition</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="medicine-category">
+                            <h3>Overpriced Medicines</h3>
+                            <table class="medicine-table">
+                                <thead>
+                                    <tr>
+                                        <th>Medicine</th>
+                                        <th>Price</th>
+                                        <th>Issue</th>
+                                        <th>Alternative</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Azee 500mg</td>
+                                        <td>₹350</td>
+                                        <td><span class="medicine-flag flag-overpriced">Overpriced</span></td>
+                                        <td>
+                                            <div class="alternatives">
+                                                <span class="alternative-item">Azithral 500mg - ₹180</span>
+                                                <span class="alternative-item">Zithrocin 500mg - ₹200</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Crocin Advance</td>
+                                        <td>₹80</td>
+                                        <td><span class="medicine-flag flag-overpriced">Overpriced</span></td>
+                                        <td>
+                                            <div class="alternatives">
+                                                <span class="alternative-item">Generic Paracetamol - ₹20</span>
+                                                <span class="alternative-item">Dolo 650 - ₹30</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="medicine-category">
+                            <h3>Potential Commission-based Prescriptions</h3>
+                            <table class="medicine-table">
+                                <thead>
+                                    <tr>
+                                        <th>Medicine</th>
+                                        <th>Price</th>
+                                        <th>Issue</th>
+                                        <th>Alternative</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nexpro RD</td>
+                                        <td>₹235</td>
+                                        <td><span class="medicine-flag flag-commission">Commission</span></td>
+                                        <td>
+                                            <div class="alternatives">
+                                                <span class="alternative-item">Omez D - ₹120</span>
+                                                <span class="alternative-item">Pantop D - ₹140</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nucoxia 90</td>
+                                        <td>₹280</td>
+                                        <td><span class="medicine-flag flag-commission">Commission</span></td>
+                                        <td>
+                                            <div class="alternatives">
+                                                <span class="alternative-item">Etoshine 90 - ₹130</span>
+                                                <span class="alternative-item">Generic Etoricoxib - ₹95</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button class="btn save-report-btn"><i class="fas fa-download"></i> Save Report</button>
+                        <button class="btn btn-outline"><i class="fas fa-share-alt"></i> Share with Doctor</button>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px; background: #f9f9f9; padding: 20px; border-radius: 8px;">
+                        <h3 style="margin-bottom: 15px; color: var(--success);">Earn 50 Health Coins!</h3>
+                        <p>You just earned 50 Health Coins for using the Bill Analyzer.</p>
+                        <p>Use them to get discounts on your next health wallet transaction.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<!-- Additional FAQ Section for Medical Bill Analyzer -->
+<section class="faq">
+    <div class="container">
+        <div class="section-title">
+            <h2>Frequently Asked Questions</h2>
+            <p>Common questions about our Medical Bill Analyzer</p>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <h3>How does the bill analyzer detect unnecessary medicines?</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Our system uses medical guidelines and best practices from reputable medical associations to identify medications that are not typically required for specific conditions. For example, antibiotics are often unnecessarily prescribed for viral infections like the common cold, where they provide no benefit.</p>
+                    <p>We also analyze your prescription in context with the diagnosed condition to flag medications that don't align with standard treatment protocols for that specific illness.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <h3>What are commission-based prescriptions?</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Some pharmaceutical companies offer incentives or commissions to doctors for prescribing their branded medications. Our system identifies potential commission-based prescriptions by analyzing patterns where expensive branded drugs are prescribed when equally effective but much cheaper alternatives (often generic versions) are available.</p>
+                    <p>We compare the prescribed medicines with their generic equivalents and other brands with the same active ingredients to identify significant price differences that may indicate commission-based prescribing.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <h3>Is my prescription data kept private?</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Yes, we take data privacy very seriously. All uploaded prescriptions and manually entered medication data are encrypted and stored securely. We do not share your personal health information with third parties without your explicit consent.</p>
+                    <p>We use anonymized data only for improving our analysis algorithms. You can delete your data at any time from your account settings.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <h3>How accurate is the bill analysis?</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Our system has been trained on millions of prescriptions and medical guidelines, achieving over 90% accuracy in identifying unnecessary and overpriced medications. However, it's important to note that our analysis is meant to be informative, not prescriptive.</p>
+                    <p>Always consult with a healthcare professional before making any changes to your medication regimen. The analysis is designed to empower you with information to have more informed discussions with your doctor.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion">
+            <div class="accordion-header">
+                <h3>Can I share the analysis with my doctor?</h3>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="accordion-content">
+                <div class="accordion-content-inner">
+                    <p>Yes, we encourage transparent conversations about medications with your healthcare providers. You can download or share your analysis report directly with your doctor through the app.</p>
+                    <p>The report is designed to be informative and respectful, presenting alternatives and concerns in a way that facilitates constructive discussion rather than confrontation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="section-title">
+            <h2>How the Bill Analyzer Works</h2>
+            <p>Our technology helps you understand your medical bills and find potential savings</p>
+        </div>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Upload or Enter Your Bill</h3>
+                <p>Simply upload a photo of your prescription or manually enter the medicine details into our secure system.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>AI-Powered Analysis</h3>
+                <p>Our AI analyzes your medicines against medical guidelines, condition context, and price databases.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Review Detailed Report</h3>
+                <p>Get a comprehensive report highlighting unnecessary medicines, overpriced drugs, and cheaper alternatives.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Save Money & Health</h3>
+                <p>Use insights to have informed discussions with your doctor and potentially save money on your medications.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials">
+    <div class="container">
+        <div class="section-title">
+            <h2>What Our Users Say</h2>
+            <p>Real stories from people who have benefited from our Bill Analyzer</p>
+        </div>
+        
+        <div class="testimonial-cards">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>The bill analyzer helped me identify that 3 out of 7 medicines in my prescription were unnecessary for my condition. When I discussed this with my doctor, he agreed and revised my prescription. Saved almost ₹800!</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/50/50" alt="Rahul from Delhi">
+                    <div class="author-info">
+                        <h4>Rahul Sharma</h4>
+                        <p>Delhi</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>My father takes medication for diabetes and blood pressure. Using the analyzer, we found much cheaper alternatives for his monthly medicines, reducing our medical expenses by ₹1,200 every month. That's a huge relief!</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/50/50" alt="Priya from Bangalore">
+                    <div class="author-info">
+                        <h4>Priya Nair</h4>
+                        <p>Bangalore</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>I never knew that some doctors prescribe medicines based on commissions. The bill analyzer flagged two expensive medicines in my child's prescription. Switched to generics and they work just as well at one-third the price!</p>
+                </div>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/50/50" alt="Amit from Mumbai">
+                    <div class="author-info">
+                        <h4>Amit Patel</h4>
+                        <p>Mumbai</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+ <!-- Footer -->
+ <footer>
+    <div class="container">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Wellness</h3>
+                <p>Connecting underserved communities to quality healthcare across India.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#business-model">Our Model</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Emergency Services</a></li>
+                    <li><a href="#">Find Hospitals</a></li>
+                    <li><a href="#">Blood Banks</a></li>
+                    <li><a href="#">Pharmacies</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra, India</li>
+                    <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-envelope"></i> info@Wellness.org</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Wellness. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Font Awesome CDN for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<script>
+    // DOM Elements
+document.addEventListener('DOMContentLoaded', function() {
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            
+            // Remove active class from all tabs and contents
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to current tab and content
+            tab.classList.add('active');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+        });
+    });
+    
+    // Drag and drop functionality for file upload
+    const dropzone = document.getElementById('dropzone');
+    const fileUpload = document.getElementById('file-upload');
+    
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+        dropzone.classList.add('highlight');
+    }
+    
+    function unhighlight() {
+        dropzone.classList.remove('highlight');
+    }
+    
+    dropzone.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFiles(files);
+    }
+    
+    fileUpload.addEventListener('change', function() {
+        handleFiles(this.files);
+    });
+    
+    function handleFiles(files) {
+        if (files.length > 0) {
+            // Show loading state
+            dropzone.innerHTML = '<i class="fas fa-spinner fa-spin"></i><h3>Analyzing your bill...</h3>';
+            
+            // Simulate file processing and analysis (in a real app, you'd send this to your backend)
+            setTimeout(() => {
+                // Show analysis result
+                document.getElementById('analysis-result').style.display = 'block';
+                
+                // Scroll to result
+                document.getElementById('analysis-result').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 2000);
+        }
+    }
+    
+    // Add medicine functionality
+    const addMedicineBtn = document.getElementById('add-medicine');
+    const medicineList = document.getElementById('medicine-list');
+    
+    addMedicineBtn.addEventListener('click', function() {
+        const medicineItem = document.createElement('div');
+        medicineItem.className = 'medicine-item';
+        medicineItem.innerHTML = `
+            <div style="flex: 1;">
+                <input type="text" class="form-control" placeholder="Medicine Name" style="margin-bottom: 10px;">
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" class="form-control" placeholder="Dosage (e.g., 500mg)" style="flex: 1;">
+                    <input type="text" class="form-control" placeholder="Price (₹)" style="flex: 1;">
+                </div>
+            </div>
+            <button class="remove-btn"><i class="fas fa-times"></i></button>
+        `;
+        
+        medicineList.appendChild(medicineItem);
+        
+        // Add event listener to the remove button
+        const removeBtn = medicineItem.querySelector('.remove-btn');
+        removeBtn.addEventListener('click', function() {
+            medicineList.removeChild(medicineItem);
+        });
+    });
+    
+    // Add event listeners to existing remove buttons
+    const removeBtns = document.querySelectorAll('.remove-btn');
+    removeBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const medicineItem = btn.closest('.medicine-item');
+            medicineList.removeChild(medicineItem);
+        });
+    });
+    
+    // Manual analysis button
+    const analyzeBtn = document.getElementById('analyze-btn');
+    
+    analyzeBtn.addEventListener('click', function() {
+        // Validate inputs
+        const medicines = document.querySelectorAll('.medicine-item');
+        let isValid = false;
+        
+        medicines.forEach(medicine => {
+            const nameInput = medicine.querySelector('input:first-child');
+            if (nameInput.value.trim() !== '') {
+                isValid = true;
+            }
+        });
+        
+        if (!isValid) {
+            alert('Please enter at least one medicine name.');
+            return;
+        }
+        
+        // Show loading state
+        analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+        analyzeBtn.disabled = true;
+        
+        // Simulate analysis (in a real app, you'd send this to your backend)
+        setTimeout(() => {
+            // Reset button
+            analyzeBtn.innerHTML = 'Analyze Prescription';
+            analyzeBtn.disabled = false;
+            
+            // Show analysis result
+            document.getElementById('analysis-result').style.display = 'block';
+            
+            // Scroll to result
+            document.getElementById('analysis-result').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }, 2000);
+    });
+    
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuBtn.addEventListener('click', function() {
+        if (navLinks.style.display === 'flex') {
+            navLinks.style.display = 'none';
+        } else {
+            navLinks.style.display = 'flex';
+        }
+    });
+    
+    // Accordion functionality for FAQ section
+    const accordions = document.querySelectorAll('.accordion');
+    
+    accordions.forEach(accordion => {
+        const header = accordion.querySelector('.accordion-header');
+        
+        header.addEventListener('click', function() {
+            accordion.classList.toggle('active');
+        });
+    });
+    
+    // Health coins integration with analysis
+    const saveReportBtn = document.querySelector('.save-report-btn');
+    
+    saveReportBtn.addEventListener('click', function() {
+        // In a real app, this would save the report to the user's account
+        // For now, just show a notification
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.right = '20px';
+        notification.style.background = 'var(--success)';
+        notification.style.color = 'white';
+        notification.style.padding = '15px 20px';
+        notification.style.borderRadius = '4px';
+        notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+        notification.style.zIndex = '9999';
+        notification.innerHTML = '<strong>Report saved!</strong> +20 Health Coins added to your wallet.';
+        
+        // Add to document
+        document.body.appendChild(notification);
+        
+        // Update health coins display in the header
+        const healthCoinsDisplay = document.querySelector('.health-coins span');
+        const currentCoins = parseInt(healthCoinsDisplay.textContent);
+        healthCoinsDisplay.textContent = currentCoins + 20;
+        
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 3000);
+    });
+    
+    // API functions for a real application
+    
+    // This function would send the prescription data to your backend for analysis
+    function analyzePrescription(prescriptionData) {
+        // In a real app, this would be an API call
+        return new Promise((resolve, reject) => {
+            // Simulate API response
+            setTimeout(() => {
+                resolve({
+                    unnecessaryMedicines: [
+                        {name: 'Althrocin 500mg', price: 280, issue: 'Not required for viral infections like common cold'},
+                        {name: 'Vitamin B Complex', price: 150, issue: 'Not needed unless blood tests show deficiency'},
+                        {name: 'Pantocid 40mg', price: 120, issue: 'Not required for this condition'}
+                    ],
+                    overpricedMedicines: [
+                        {
+                            name: 'Azee 500mg', 
+                            price: 350, 
+                            alternatives: [
+                                {name: 'Azithral 500mg', price: 180},
+                                {name: 'Zithrocin 500mg', price: 200}
+                            ]
+                        },
+                        {
+                            name: 'Crocin Advance', 
+                            price: 80, 
+                            alternatives: [
+                                {name: 'Generic Paracetamol', price: 20},
+                                {name: 'Dolo 650', price: 30}
+                            ]
+                        }
+                    ],
+                    commissionBasedMedicines: [
+                        {
+                            name: 'Nexpro RD', 
+                            price: 235, 
+                            alternatives: [
+                                {name: 'Omez D', price: 120},
+                                {name: 'Pantop D', price: 140}
+                            ]
+                        },
+                        {
+                            name: 'Nucoxia 90', 
+                            price: 280, 
+                            alternatives: [
+                                {name: 'Etoshine 90', price: 130},
+                                {name: 'Generic Etoricoxib', price: 95}
+                            ]
+                        }
+                    ],
+                    totalSavings: 780
+                });
+            }, 1500);
+        });
+    }
+    
+    // Image recognition function for processing bill uploads
+    function processBillImage(imageFile) {
+        // In a real app, this would send the image to an OCR service or your backend
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                // In a real app, you'd send e.target.result to your backend
+                // For now, just resolve with dummy data
+                setTimeout(() => {
+                    resolve({
+                        doctor: 'Dr. Sharma',
+                        hospital: 'City Hospital',
+                        diagnosis: 'Common Cold',
+                        medicines: [
+                            {name: 'Althrocin 500mg', dosage: '1-0-1', price: 280},
+                            {name: 'Azee 500mg', dosage: '0-0-1', price: 350},
+                            {name: 'Crocin Advance', dosage: 'SOS', price: 80},
+                            {name: 'Vitamin B Complex', dosage: '1-0-1', price: 150},
+                            {name: 'Pantocid 40mg', dosage: '1-0-0', price: 120},
+                            {name: 'Nexpro RD', dosage: '0-0-1', price: 235},
+                            {name: 'Nucoxia 90', dosage: 'SOS', price: 280}
+                        ]
+                    });
+                }, 1500);
+            };
+            
+            reader.onerror = function() {
+                reject(new Error('Failed to read file'));
+            };
+            
+            reader.readAsDataURL(imageFile);
+        });
+    }
+    
+    // Function to format currency
+    function formatCurrency(amount) {
+        return '₹' + amount.toLocaleString('en-IN');
+    }
+    
+    // Function to generate PDF report (using a library like jsPDF in a real app)
+    function generatePDFReport(analysisData) {
+        // In a real app, this would generate a PDF using a library
+        console.log('Generating PDF with data:', analysisData);
+        alert('Report downloaded successfully!');
+    }
+});
+
+// Health Coin Integration System for Bill Analyzer
+// This code would typically be part of a larger application framework
+
+class HealthCoinSystem {
+    constructor(userId) {
+        this.userId = userId;
+        this.activities = {
+            'bill_analysis': 50,
+            'saved_report': 20,
+            'shared_with_doctor': 30,
+            'switched_to_generic': 100,
+            'monthly_analysis': 75
+        };
+    }
+    
+    // Award coins for completing an activity
+    awardCoins(activityType) {
+        if (!this.activities[activityType]) {
+            console.error(`Unknown activity type: ${activityType}`);
+            return false;
+        }
+        
+        const coinsAwarded = this.activities[activityType];
+        
+        // In a real app, this would make an API call to your backend
+        return this.updateUserCoins(coinsAwarded)
+            .then(newTotal => {
+                this.showCoinAnimation(coinsAwarded);
+                this.updateCoinDisplay(newTotal);
+                return newTotal;
+            })
+            .catch(error => {
+                console.error('Failed to award coins:', error);
+                return false;
+            });
+    }
+    
+    // Update user's coin balance in database (simulated)
+    updateUserCoins(coinsToAdd) {
+        return new Promise((resolve, reject) => {
+            // In a real app, this would be an API call to update the database
+            // For demo purposes, we'll just update the UI
+            
+            // Get current balance from UI
+            const healthCoinsDisplay = document.querySelector('.health-coins span');
+            if (!healthCoinsDisplay) {
+                reject(new Error('Health coins display element not found'));
+                return;
+            }
+            
+            const currentCoins = parseInt(healthCoinsDisplay.textContent);
+            const newTotal = currentCoins + coinsToAdd;
+            
+            // Simulate API delay
+            setTimeout(() => {
+                resolve(newTotal);
+            }, 500);
+        });
+    }
+    
+    // Show coin animation when awarded
+    showCoinAnimation(coinsAwarded) {
+        // Create coin animation element
+        const coinAnimation = document.createElement('div');
+        coinAnimation.className = 'coin-animation';
+        coinAnimation.innerHTML = `+${coinsAwarded} <img src="assets/coins.svg" alt="Health Coins" width="20">`;
+        
+        // Style the animation
+        Object.assign(coinAnimation.style, {
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'rgba(255, 215, 0, 0.9)',
+            color: '#000',
+            padding: '10px 20px',
+            borderRadius: '20px',
+            fontWeight: 'bold',
+            fontSize: '18px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            zIndex: '9999',
+            opacity: '0',
+            transition: 'all 1.5s ease-out'
+        });
+        
+        // Add to document
+        document.body.appendChild(coinAnimation);
+        
+        // Animate
+        setTimeout(() => {
+            coinAnimation.style.opacity = '1';
+            coinAnimation.style.top = '40%';
+        }, 100);
+        
+        setTimeout(() => {
+            coinAnimation.style.opacity = '0';
+            coinAnimation.style.top = '30%';
+        }, 1500);
+        
+        setTimeout(() => {
+            document.body.removeChild(coinAnimation);
+        }, 3000);
+    }
+    
+    // Update coin display in UI
+    updateCoinDisplay(newTotal) {
+        const healthCoinsDisplay = document.querySelector('.health-coins span');
+        if (healthCoinsDisplay) {
+            healthCoinsDisplay.textContent = newTotal;
+            
+            // Highlight effect
+            healthCoinsDisplay.style.transition = 'all 0.3s';
+            healthCoinsDisplay.style.color = '#ffc107';
+            healthCoinsDisplay.style.transform = 'scale(1.2)';
+            
+            setTimeout(() => {
+                healthCoinsDisplay.style.color = '';
+                healthCoinsDisplay.style.transform = '';
+            }, 1000);
+        }
+    }
+    
+    // Get user's current coin balance
+    getUserCoins() {
+        return new Promise((resolve, reject) => {
+            // In a real app, this would be an API call
+            const healthCoinsDisplay = document.querySelector('.health-coins span');
+            if (!healthCoinsDisplay) {
+                reject(new Error('Health coins display element not found'));
+                return;
+            }
+            
+            const currentCoins = parseInt(healthCoinsDisplay.textContent);
+            resolve(currentCoins);
+        });
+    }
+    
+    // Get rewards available to user
+    getAvailableRewards() {
+        return new Promise((resolve) => {
+            // In a real app, this would be an API call
+            resolve([
+                {
+                    id: 1,
+                    name: 'Free Doctor Consultation',
+                    description: 'Virtual consultation with a general physician',
+                    coinCost: 500,
+                    available: true
+                },
+                {
+                    id: 2,
+                    name: '20% Off Prescribed Medicines',
+                    description: 'Discount coupon for online medicine purchase',
+                    coinCost: 300,
+                    available: true
+                },
+                {
+                    id: 3,
+                    name: 'Basic Health Checkup',
+                    description: 'Free basic health checkup at partner clinics',
+                    coinCost: 1000,
+                    available: true
+                },
+                {
+                    id: 4,
+                    name: 'One Month Micro-Insurance',
+                    description: 'Free health micro-insurance coverage for one month',
+                    coinCost: 750,
+                    available: true
+                }
+            ]);
+        });
+    }
+    
+    // Redeem coins for a reward
+    redeemReward(rewardId) {
+        return new Promise((resolve, reject) => {
+            // First get available rewards
+            this.getAvailableRewards()
+                .then(rewards => {
+                    const reward = rewards.find(r => r.id === rewardId);
+                    
+                    if (!reward) {
+                        reject(new Error('Reward not found'));
+                        return;
+                    }
+                    
+                    // Check if user has enough coins
+                    return this.getUserCoins()
+                        .then(currentCoins => {
+                            if (currentCoins < reward.coinCost) {
+                                reject(new Error('Insufficient coins'));
+                                return;
+                            }
+                            
+                            // Deduct coins
+                            return this.updateUserCoins(-reward.coinCost)
+                                .then(newTotal => {
+                                    this.updateCoinDisplay(newTotal);
+                                    
+                                    // Generate reward code or token
+                                    const rewardCode = this.generateRewardCode();
+                                    
+                                    resolve({
+                                        reward,
+                                        rewardCode,
+                                        newCoinBalance: newTotal
+                                    });
+                                });
+                        });
+                })
+                .catch(reject);
+        });
+    }
+    
+    // Generate a unique reward code (in a real app, this would be more secure)
+    generateRewardCode() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let code = '';
+        
+        for (let i = 0; i < 8; i++) {
+            code += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        
+        return code;
+    }
+}
+
+// Initialize the Health Coin System when a user is logged in
+document.addEventListener('DOMContentLoaded', function() {
+    // In a real app, you'd get the userId from your auth system
+    const userId = 'user123'; // Placeholder
+    
+    // Create global instance
+    window.healthCoinSystem = new HealthCoinSystem(userId);
+    
+    // Hook up to the bill analyzer events
+    const analyzeBtn = document.getElementById('analyze-btn');
+    
+    if (analyzeBtn) {
+        // Listen for the completion of analysis
+        analyzeBtn.addEventListener('click', function() {
+            // The analysis completion is simulated in the main JS
+            // This would award coins when analysis is complete
+            setTimeout(() => {
+                window.healthCoinSystem.awardCoins('bill_analysis');
+            }, 2500);
+        });
+    }
+    
+    // Hook up to the save report button
+    const saveReportBtn = document.querySelector('.save-report-btn');
+    
+    if (saveReportBtn) {
+        saveReportBtn.addEventListener('click', function() {
+            window.healthCoinSystem.awardCoins('saved_report');
+        });
+    }
+    
+    // Hook up to the share with doctor button
+    const shareWithDoctorBtn = document.querySelector('.btn-outline');
+    
+    if (shareWithDoctorBtn && shareWithDoctorBtn.innerHTML.includes('Share with Doctor')) {
+        shareWithDoctorBtn.addEventListener('click', function() {
+            // In a real app, this would open a share dialog
+            alert('Share report with your doctor via WhatsApp, Email, or generate a PDF');
+            
+            // Award coins when shared
+            window.healthCoinSystem.awardCoins('shared_with_doctor');
+        });
+    }
+});
+</script>

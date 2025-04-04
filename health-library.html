@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Library | Wellness</title>
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --primary-dark: #1565c0;
+            --secondary: #26a69a;
+            --accent: #ff7043;
+            --light: #f5f5f5;
+            --dark: #333;
+            --danger: #e53935;
+            --success: #43a047;
+            --warning: #ffb300;
+            --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font);
+            line-height: 1.6;
+            color: var(--dark);
+            background: #f9f9f9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1976d2, #64b5f6);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* Language selector */
+        .language-selector {
+            position: relative;
+            margin-left: 15px;
+        }
+
+        .language-selector select {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background: white;
+            appearance: none;
+            padding-right: 25px;
+        }
+
+        .language-selector:after {
+            content: '▼';
+            font-size: 10px;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* Health coin indicator */
+        .health-coins {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+            color: var(--warning);
+        }
+
+        
+
+        /* Search bar */
+        .search-container {
+            max-width: 600px;
+            margin: -25px auto 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-bar {
+            display: flex;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-btn {
+            padding: 0 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Filter tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .filter-tab:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Content grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .content-thumbnail {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content-type {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .type-video {
+            background: var(--danger);
+        }
+
+        .type-article {
+            background: var(--primary);
+        }
+
+        .type-podcast {
+            background: var(--secondary);
+        }
+
+        .type-book {
+            background: var(--warning);
+        }
+
+        .content-info {
+            padding: 20px;
+        }
+
+        .content-info h3 {
+            margin-bottom: 10px;
+        }
+
+        .content-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .content-languages span {
+            background: var(--light);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        /* Live stream section */
+        .live-streams {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            color: var(--primary);
+        }
+
+        .live-now {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            color: var(--danger);
+        }
+
+        .live-pulse {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .stream-cards {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .stream-card {
+            flex: 0 0 340px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stream-thumbnail {
+            height: 180px;
+            position: relative;
+        }
+
+        .stream-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--danger);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .viewers {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .stream-info {
+            padding: 15px;
+        }
+
+        .stream-info h3 {
+            margin-bottom: 10px;
+        }
+
+        .streamer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .streamer img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: #bdbdbd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-bottom p {
+            color: #bdbdbd;
+            font-size: 0.9rem;
+        }
+
+
+        /* Languages, Featured, Doctor Connect */
+        .translations-available {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .topic-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .topic-pill {
+            padding: 3px 8px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        /* Subscriptions */
+        .subscription-plans {
+            margin: 50px 0;
+        }
+
+        .plan-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .plan-price {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .plan-price span {
+            font-size: 16px;
+            color: #777;
+        }
+
+        .plan-features {
+            margin: 20px 0;
+        }
+
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            list-style: none;
+        }
+
+        .plan-card.featured {
+            border: 2px solid var(--primary);
+            position: relative;
+        }
+
+        .featured-tag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .modal-title {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        /* Doctor Connect section */
+        .doctor-connect {
+            margin-bottom: 50px;
+        }
+
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .doctor-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .doctor-photo {
+            height: 200px;
+            position: relative;
+        }
+
+        .doctor-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .doctor-info {
+            padding: 15px;
+        }
+
+        .doctor-info h3 {
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .doctor-specialty {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .doctor-rating {
+            color: var(--warning);
+            margin-bottom: 10px;
+        }
+
+        .doctor-languages {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .doctor-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Health Challenges section */
+        .health-challenges {
+            margin-bottom: 50px;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .challenge-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .challenge-banner {
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .challenge-info {
+            padding: 20px;
+        }
+
+        .challenge-info h3 {
+            margin-bottom: 10px;
+        }
+
+        .challenge-progress {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--success);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="./Images/logo.png" alt="Wellness Logo">
+                    <h1>Wellness</h1>
+                </a>
+                <button class="mobile-menu-btn">☰</button>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="chat.html">AI Assistant</a>
+                    <a href="health-library.html">Health Library</a>
+                    <a href="insurance.html">Insurance</a>
+                    <a href="emergency.html">Emergency</a>
+                    <a href="bill-analyser.html">Bill Analyser</a>
+                    <div class="health-coins">
+                        <span>🪙</span>
+                        <span>120</span>
+                    </div>
+                    <div class="language-selector">
+                        <select id="language">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="mr">मराठी</option>
+                        </select>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Healthcare for Everyone, Everywhere</h2>
+            <p>Access affordable healthcare solutions, connect with doctors in your language, and earn rewards for staying healthy. Wellness is your companion for a healthier life.</p>
+            <div class="hero-buttons">
+                <a href="chat.html" class="btn">Talk to AI Health Assistant</a>
+                <a href="insurance.html" class="btn btn-outline">Get Micro-Insurance from ₹10/month</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="container">
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Search for health topics...">
+                <button class="search-btn">Search</button>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <div class="filter-tab active">All</div>
+            <div class="filter-tab">Videos</div>
+            <div class="filter-tab">Articles</div>
+            <div class="filter-tab">Podcasts</div>
+            <div class="filter-tab">Books</div>
+            <div class="filter-tab">Doctor Connect</div>
+        </div>
+
+        <!-- Featured Content Section -->
+        <section class="featured-content">
+            <div class="section-header">
+                <h2>Featured Content</h2>
+                <div class="view-all">
+                    <a href="#" class="btn-outline">View All</a>
+                </div>
+            </div>
+            
+            <div class="content-grid">
+                <!-- Content Card 1 -->
+                <div class="content-card">
+                    <div class="content-thumbnail">
+                        <img src="https://via.placeholder.com/400x300" alt="Diabetes Management">
+                        <div class="content-type type-video">Video</div>
+                    </div>
+                    <div class="content-info">
+                        <h3>Understanding Diabetes: Symptoms & Management</h3>
+                        <p>Learn about early diabetes symptoms and how to manage your blood sugar naturally.</p>
+                        <div class="topic-pills">
+                            <span class="topic-pill">Diabetes</span>
+                            <span class="topic-pill">Nutrition</span>
+                        </div>
+                        <div class="content-meta">
+                            <div class="content-languages">
+                                <span>Hindi</span>
+                                <span>English</span>
+                            </div>
+                            <div class="content-duration">12:45</div>
+                        </div>
+                        <div class="translations-available">
+                            Available in 5 more languages
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Card 2 -->
+                <div class="content-card">
+                    <div class="content-thumbnail">
+                        <img src="https://via.placeholder.com/400x300" alt="Maternal Health">
+                        <div class="content-type type-article">Article</div>
+                    </div>
+                    <div class="content-info">
+                        <h3>Maternal Health Guide: What Every Expecting Mother Should Know</h3>
+                        <p>Essential tips for a healthy pregnancy and safe delivery.</p>
+                        <div class="topic-pills">
+                            <span class="topic-pill">Pregnancy</span>
+                            <span class="topic-pill">Women's Health</span>
+                        </div>
+                        <div class="content-meta">
+                            <div class="content-languages">
+                                <span>Hindi</span>
+                                <span>Tamil</span>
+                            </div>
+                            <div class="content-duration">8 min read</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Card 3 -->
+                <div class="content-card">
+                    <div class="content-thumbnail">
+                        <img src="https://via.placeholder.com/400x300" alt="Mental Health">
+                        <div class="content-type type-podcast">Podcast</div>
+                    </div>
+                    <div class="content-info">
+                        <h3>Mental Health in Rural Communities</h3>
+                        <p>Breaking stigmas and accessing mental health resources in rural India.</p>
+                        <div class="topic-pills">
+                            <span class="topic-pill">Mental Health</span>
+                            <span class="topic-pill">Rural Health</span>
+                        </div>
+                        <div class="content-meta">
+                            <div class="content-languages">
+                                <span>Bengali</span>
+                                <span>English</span>
+                            </div>
+                            <div class="content-duration">28:15</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Card 4 -->
+                <div class="content-card">
+                    <div class="content-thumbnail">
+                        <img src="https://via.placeholder.com/400x300" alt="Preventive Health">
+                        <div class="content-type type-book">Book</div>
+                    </div>
+                    <div class="content-info">
+                        <h3>Complete Guide to Preventive Health Measures</h3>
+                        <p>Learn how to prevent common diseases through lifestyle changes.</p>
+                        <div class="topic-pills">
+                            <span class="topic-pill">Prevention</span>
+                            <span class="topic-pill">Lifestyle</span>
+                        </div>
+                        <div class="content-meta">
+                            <div class="content-languages">
+                                <span>Malayalam</span>
+                                <span>Hindi</span>
+                            </div>
+                            <div class="content-duration">124 pages</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Streams Section -->
+        <section class="live-streams">
+            <div class="section-header">
+                <h2>Live Health Radio & Streams</h2>
+                <div class="live-now">
+                    <span class="live-pulse"></span>
+                    <span>7 Live Now</span>
+                </div>
+            </div>
+            
+            <div class="stream-cards">
+                <!-- Stream Card 1 -->
+                <div class="stream-card">
+                    <div class="stream-thumbnail">
+                        <img src="https://via.placeholder.com/400x300" alt="Doctor Q&A">
+                        <div class="live-badge">
+                            <span class="live-pulse"></span>
+                            <span>LIVE</span>
+                        </div>
+                        <div class="viewers">1.2K watching</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3>Doctor Q&A: Common Childhood Illnesses</h3>
+                        <div class="streamer">
+                            <img src="https://via.placeholder.com/50x50" alt="Dr. Sharma">
+                            <span>Dr. Sharma, Pediatrician</span>
+                        </div>
+                        <div class="translations-available">
+                            Live translation in Hindi, Tamil, Telugu
+                        </div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 10px;">Join Stream</button>
+                    </div>
+                </div>
+                
+                <!-- Stream Card 2 -->
+                <div class="stream-card">
+                    <div class="stream-thumbnail">
+                        <img src="https://via.placeholder.com/400x300" alt="Yoga Session">
+                        <div class="live-badge">
+                            <span class="live-pulse"></span>
+                            <span>LIVE</span>
+                        </div>
+                        <div class="viewers">845 watching</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3>Morning Yoga for Diabetes Management</h3>
+                        <div class="streamer">
+                            <img src="https://via.placeholder.com/50x50" alt="Yoga Instructor">
+                            <span>Ananya, Certified Yoga Instructor</span>
+                        </div>
+                        <div class="translations-available">
+                            Live translation in Gujarati, Marathi
+                        </div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 10px;">Join Stream</button>
+                    </div>
+                </div>
+                
+                <!-- Stream Card 3 -->
+                <div class="stream-card">
+                    <div class="stream-thumbnail">
+                        <img src="https://via.placeholder.com/400x300" alt="Nutrition Talk">
+                        <div class="live-badge">
+                            <span class="live-pulse"></span>
+                            <span>LIVE</span>
+                        </div>
+                        <div class="viewers">632 watching</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3>Budget-friendly Nutrition for Families</h3>
+                        <div class="streamer">
+                            <img src="https://via.placeholder.com/50x50" alt="Nutritionist">
+                            <span>Priya Desai, Nutritionist</span>
+                        </div>
+                        <div class="translations-available">
+                            Live translation in Bengali, Kannada
+                        </div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 10px;">Join Stream</button>
+                    </div>
+                </div>
+                
+                <!-- Stream Card 4 -->
+                <div class="stream-card">
+                    <div class="stream-thumbnail">
+                        <img src="https://via.placeholder.com/400x300" alt="Mental Health">
+                        <div class="live-badge">
+                            <span class="live-pulse"></span>
+                            <span>LIVE</span>
+                        </div>
+                        <div class="viewers">478 watching</div>
+                    </div>
+                    <div class="stream-info">
+                        <h3>Stress Management Techniques</h3>
+                        <div class="streamer">
+                            <img src="https://via.placeholder.com/50x50" alt="Psychologist">
+                            <span>Dr. Mehta, Clinical Psychologist</span>
+                        </div>
+                        <div class="translations-available">
+                            Live translation in Tamil, Telugu
+                        </div>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 10px;">Join Stream</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Doctor Connect Section -->
+        <section class="doctor-connect">
+            <div class="section-header">
+                <h2>Connect with Health Experts</h2>
+                <div class="view-all">
+                    <a href="#" class="btn-outline">View All Experts</a>
+                </div>
+            </div>
+            
+            <div class="doctor-grid">
+                <!-- Doctor Card 1 -->
+                <div class="doctor-card">
+                    <div class="doctor-photo">
+                        <img src="https://via.placeholder.com/300x400" alt="Dr. Priya Sharma">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>Dr. Priya Sharma</h3>
+                        <div class="doctor-specialty">Pediatrician</div>
+                        <div class="doctor-rating">★★★★★ (4.9)</div>
+                        <div class="doctor-languages">
+                            <span class="topic-pill">Hindi</span>
+                            <span class="topic-pill">English</span>
+                        </div>
+                        <div class="doctor-buttons">
+                            <button class="btn" style="flex: 1">Video Call</button>
+                            <button class="btn btn-outline" style="flex: 1">Chat</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Doctor Card 2 -->
+                <div class="doctor-card">
+                    <div class="doctor-photo">
+                        <img src="https://via.placeholder.com/300x400" alt="Dr. Rajesh Kumar">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>Dr. Rajesh Kumar</h3>
+                        <div class="doctor-specialty">Cardiologist</div>
+                        <div class="doctor-rating">★★★★☆ (4.7)</div>
+                        <div class="doctor-languages">
+                            <span class="topic-pill">Tamil</span>
+                            <span class="topic-pill">English</span>
+                        </div>
+                        <div class="doctor-buttons">
+                            <button class="btn" style="flex: 1">Video Call</button>
+                            <button class="btn btn-outline" style="flex: 1">Chat</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Doctor Card 3 -->
+                <div class="doctor-card">
+                    <div class="doctor-photo">
+                        <img src="https://via.placeholder.com/300x400" alt="Dr. Meena Patel">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>Dr. Meena Patel</h3>
+                        <div class="doctor-specialty">Gynecologist</div>
+                        <div class="doctor-rating">★★★★★ (4.9)</div>
+                        <div class="doctor-languages">
+                            <span class="topic-pill">Gujarati</span>
+                            <span class="topic-pill">Hindi</span>
+                        </div>
+                        <div class="doctor-buttons">
+                            <button class="btn" style="flex: 1">Video Call</button>
+                            <button class="btn btn-outline" style="flex: 1">Chat</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Doctor Card 4 -->
+                <div class="doctor-card">
+                    <div class="doctor-photo">
+                        <img src="https://via.placeholder.com/300x400" alt="Dr. Arjun Singh">
+                    </div>
+                    <div class="doctor-info">
+                        <h3>Dr. Arjun Singh</h3>
+                        <div class="doctor-specialty">General Physician</div>
+                        <div class="doctor-rating">★★★★☆ (4.8)</div>
+                        <div class="doctor-languages">
+                            <span class="topic-pill">Bengali</span>
+                            <span class="topic-pill">English</span>
+                        </div>
+                        <div class="doctor-buttons">
+                            <button class="btn" style="flex: 1">Video Call</button>
+                            <button class="btn btn-outline" style="flex: 1">Chat</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Health Challenges Section -->
+        <section class="health-challenges">
+            <div class="section-header">
+                <h2>Earn Health Coins with Challenges</h2>
+                <div class="view-all">
+                    <a href="#" class="btn-outline">View All Challenges</a>
+                </div>
+            </div>
+            
+            <div class="challenges-grid">
+                <!-- Challenge Card 1 -->
+                <div class="challenge-card">
+                    <div class="challenge-banner">
+                        <h3>30-Day Diabetes Management</h3>
+                    </div>
+                    <div class="challenge-info">
+                        <p>Complete daily tasks to improve your diabetes management and earn up to 500 Health Coins.</p>
+                        <div class="challenge-progress">
+                            <div class="progress-bar" style="width: 65%;"></div>
+                        </div>
+                        <div class="challenge-stats">
+                            <span>Day 19 of 30</span>
+                            <span>325/500 Coins Earned</span>
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 15px;">Today's Task</button>
+                    </div>
+                </div>
+                
+                <!-- Challenge Card 2 -->
+                <div class="challenge-card">
+                    <div class="challenge-banner">
+                        <h3>Learn About Heart Health</h3>
+                    </div>
+                    <div class="challenge-info">
+                        <p>Complete this educational series on heart health and prevention to earn 200 Health Coins.</p>
+                        <div class="challenge-progress">
+                            <div class="progress-bar" style="width: 40%;"></div>
+                        </div>
+                        <div class="challenge-stats">
+                            <span>2 of 5 Modules Completed</span>
+                            <span>80/200 Coins Earned</span>
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 15px;">Continue Learning</button>
+                    </div>
+                </div>
+                
+                <!-- Challenge Card 3 -->
+                <div class="challenge-card">
+                    <div class="challenge-banner">
+                        <h3>Family Vaccination Tracker</h3>
+                    </div>
+                    <div class="challenge-info">
+                        <p>Keep your family's vaccinations up to date and earn Health Coins for each completed vaccination.</p>
+                        <div class="challenge-progress">
+                            <div class="progress-bar" style="width: 75%;"></div>
+                        </div>
+                        <div class="challenge-stats">
+                            <span>3 of 4 Family Members</span>
+                            <span>150/200 Coins Earned</span>
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 15px;">View Schedule</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subscription Plans -->
+        <section class="subscription-plans">
+            <div class="section-header">
+                <h2>Premium Health Library Access</h2>
+            </div>
+            
+            <div class="plan-cards">
+                <!-- Free Plan -->
+                <div class="plan-card">
+                    <h3>Basic Access</h3>
+                    <div class="plan-price">
+                        ₹0 <span>/month</span>
+                    </div>
+                    <p>Access to essential health content and limited features.</p>
+                    <ul class="plan-features">
+                        <li>Limited library access</li>
+                        <li>Standard content quality</li>
+                        <li>Basic vernacular support</li>
+                        <li>Ad-supported experience</li>
+                        <li>Basic health coins rewards</li>
+                    </ul>
+                    <button class="btn btn-outline" style="width: 100%;">Current Plan</button>
+                </div>
+                
+                <!-- Premium Plan -->
+                <div class="plan-card featured">
+                    <div class="featured-tag">Most Popular</div>
+                    <h3>Premium Access</h3>
+                    <div class="plan-price">
+                        ₹99 <span>/month</span>
+                    </div>
+                    <p>Enhanced access to premium content and exclusive features.</p>
+                    <ul class="plan-features">
+                        <li>Full library access</li>
+                        <li>HD quality content</li>
+                        <li>Complete vernacular support</li>
+                        <li>Ad-free experience</li>
+                        <li>2x health coins rewards</li>
+                        <li>Offline downloads</li>
+                    </ul>
+                    <button class="btn" style="width: 100%;">Upgrade Now</button>
+                </div>
+                
+                <!-- Family Plan -->
+                <div class="plan-card">
+                    <h3>Family Access</h3>
+                    <div class="plan-price">
+                        ₹249 <span>/month</span>
+                    </div>
+                    <p>Premium access for up to 5 family members with shared benefits.</p>
+                    <ul class="plan-features">
+                        <li>Full library access</li>
+                        <li>HD quality content</li>
+                        <li>Complete vernacular support</li>
+                        <li>Ad-free experience</li>
+                        <li>3x health coins rewards</li>
+                        <li>Offline downloads</li>
+                        <li>Family health tracker</li>
+                    </ul>
+                    <button class="btn btn-outline" style="width: 100%;">Upgrade Now</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <div class="page-btn">«</div>
+            <div class="page-btn active">1</div>
+            <div class="page-btn">2</div>
+            <div class="page-btn">3</div>
+            <div class="page-btn">4</div>
+            <div class="page-btn">»</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+ <!-- Footer -->
+ <footer>
+    <div class="container">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Wellness</h3>
+                <p>Connecting underserved communities to quality healthcare across India.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#business-model">Our Model</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Emergency Services</a></li>
+                    <li><a href="#">Find Hospitals</a></li>
+                    <li><a href="#">Blood Banks</a></li>
+                    <li><a href="#">Pharmacies</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra, India</li>
+                    <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-envelope"></i> info@Wellness.org</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Wellness. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    <!-- Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="close-modal">&times;</div>
+            <h2 class="modal-title">Sign in to continue</h2>
+            <div class="modal-body">
+                <p>You need to log in or create an account to access this feature. Sign in to continue.</p>
+            </div>
+            <button class="btn" style="width: 100%;">Login / Sign Up</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+
+            // Language selector
+            const languageSelector = document.getElementById('language');
+            languageSelector.addEventListener('change', function() {
+                // In a real implementation, this would change the site language
+                console.log('Language changed to: ' + this.value);
+                // You could redirect to language-specific versions or use i18n here
+            });
+
+            // Floating action button
+            const floatingAction = document.querySelector('.floating-action');
+            floatingAction.addEventListener('click', function() {
+                window.location.href = 'emergency.html';
+            });
+
+            // For demo purposes - smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Filter tabs
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                filterTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                // Add filter functionality here
+            });
+        });
+
+        // Modal functionality
+        const premiumButtons = document.querySelectorAll('.btn');
+        const modal = document.querySelector('.modal');
+        const closeModal = document.querySelector('.close-modal');
+
+        premiumButtons.forEach(button => {
+            if (button.textContent.includes('Upgrade') || button.textContent.includes('Join Stream')) {
+                button.addEventListener('click', function() {
+                    modal.style.display = 'flex';
+                });
+            }
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Add to favorites functionality
+        // Track video watching progress
+        // Health coins earning animation
+        // Content recommendation system based on user preferences
+
+        // Function to track content interaction and reward Health Coins
+        function trackContentInteraction(contentId, interactionType) {
+            // This would connect to your backend API
+            console.log(`User interacted with content ${contentId} via ${interactionType}`);
+            // Award Health Coins based on interaction type
+            const coinsEarned = interactionType === 'complete' ? 10 : 2;
+            updateHealthCoins(coinsEarned);
+        }
+
+        // Function to update Health Coins display
+        function updateHealthCoins(amount) {
+            const coinsDisplay = document.querySelector('.health-coins span');
+            const currentCoins = parseInt(coinsDisplay.textContent);
+            coinsDisplay.textContent = currentCoins + amount;
+            
+            // Show animation
+            showCoinAnimation(amount);
+        }
+
+        // Function to show coin earning animation
+        function showCoinAnimation(amount) {
+            const animation = document.createElement('div');
+            animation.textContent = `+${amount}`;
+            animation.style.position = 'fixed';
+            animation.style.right = '20px';
+            animation.style.top = '70px';
+            animation.style.background = '#ffc107';
+            animation.style.color = '#333';
+            animation.style.padding = '5px 10px';
+            animation.style.borderRadius = '20px';
+            animation.style.fontWeight = 'bold';
+            animation.style.zIndex = '1000';
+            animation.style.opacity = '0';
+            animation.style.transform = 'translateY(20px)';
+            animation.style.transition = 'all 0.5s ease';
+            
+            document.body.appendChild(animation);
+            
+            setTimeout(() => {
+                animation.style.opacity = '1';
+                animation.style.transform = 'translateY(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                animation.style.opacity = '0';
+                animation.style.transform = 'translateY(-20px)';
+            }, 2000);
+            
+            setTimeout(() => {
+                document.body.removeChild(animation);
+            }, 2500);
+        }
+    </script>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

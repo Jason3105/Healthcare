@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness - Healthcare Access for All</title>
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --primary-dark: #1565c0;
+            --secondary: #ff5722;
+            --light: #f5f5f5;
+            --dark: #333;
+            --success: #4caf50;
+            --danger: #f44336;
+            --gray: #757575;
+            --light-gray: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1976d2, #64b5f6);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .dashboard {
+            margin: 3rem 0;
+        }
+        
+        .dashboard-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .dashboard-header h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .dashboard-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+        
+        .sos-panel {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            height: fit-content;
+        }
+        
+        .sos-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+            text-align: center;
+        }
+        
+        .sos-button {
+            display: block;
+            width: 100%;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .search-panel {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .search-panel input {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 50px;
+            border: 1px solid var(--light-gray);
+            outline: none;
+            font-size: 1rem;
+            padding-left: 3rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-panel input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
+        }
+        
+        .search-panel i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+        
+        .hospitals-list {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
+        .hospitals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hospitals-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .filter-options select {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid var(--light-gray);
+            outline: none;
+        }
+        
+        .facility-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            background-color: var(--light);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .facility-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .facility-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+        
+        .facility-distance {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .facility-type {
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .facility-address {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .facility-contact {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .phone-number {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .availability {
+            color: var(--success);
+            font-weight: 500;
+        }
+        
+        .unavailable {
+            color: var(--danger);
+        }
+        
+        .how-it-works {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .section-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .step-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            background-color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-number {
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        .business-model {
+            padding: 5rem 0;
+            background-color: var(--light);
+        }
+        
+        .model-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .model-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .model-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .model-icon {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(30, 136, 229, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .model-icon i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .model-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: #bdbdbd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-bottom p {
+            color: #bdbdbd;
+            font-size: 0.9rem;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Loading animation */
+        .loader {
+            width: 100%;
+            height: 4px;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--light-gray);
+            margin: 20px 0;
+            border-radius: 2px;
+        }
+        
+        .loader:before {
+            content: "";
+            position: absolute;
+            left: -50%;
+            height: 4px;
+            width: 40%;
+            background-color: var(--primary);
+            animation: loading 1.5s linear infinite;
+            border-radius: 2px;
+        }
+        
+        @keyframes loading {
+            from {
+                left: -50%;
+            }
+            to {
+                left: 100%;
+            }
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            padding: 2rem;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        
+        .modal-header {
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .emergency-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .emergency-option {
+            text-align: center;
+            background-color: var(--light);
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .emergency-option:hover {
+            background-color: rgba(30, 136, 229, 0.1);
+        }
+        
+        .emergency-option i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .emergency-option h4 {
+            color: var(--dark);
+        }
+        
+        .modal-footer {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="index.html" class="logo">
+                    <img src="./Images/logo.png" alt="Wellness Logo">
+                    <h1>Wellness</h1>
+                </a>
+                <button class="mobile-menu-btn">☰</button>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="chat.html">AI Assistant</a>
+                    <a href="health-library.html">Health Library</a>
+                    <a href="insurance.html">Insurance</a>
+                    <a href="emergency.html">Emergency</a>
+                    <a href="bill-analyser.html">Bill Analyser</a>
+                    <div class="health-coins">
+                        <span>🪙</span>
+                        <span>120</span>
+                    </div>
+                    <div class="language-selector">
+                        <select id="language">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="mr">मराठी</option>
+                        </select>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Healthcare for Everyone, Everywhere</h2>
+            <p>Access affordable healthcare solutions, connect with doctors in your language, and earn rewards for staying healthy. Wellness is your companion for a healthier life.</p>
+            <div class="hero-buttons">
+                <a href="chat.html" class="btn">Talk to AI Health Assistant</a>
+                <a href="insurance.html" class="btn btn-outline">Get Micro-Insurance from ₹10/month</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Dashboard Section -->
+    <section class="dashboard" id="dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Emergency & Nearby Hospitals Dashboard</h2>
+                <p>Quickly find healthcare facilities near you and access emergency services with one tap.</p>
+            </div>
+            <div class="dashboard-content">
+                <div class="sos-panel">
+                    <h3>Emergency Services</h3>
+                    <button class="btn btn-danger sos-button" id="sos-btn">
+                        <i class="fas fa-ambulance"></i> SOS Emergency
+                    </button>
+                    <button class="btn btn-primary sos-button">
+                        <i class="fas fa-hospital"></i> Find Blood Bank
+                    </button>
+                    <div class="search-panel">
+                        <i class="fas fa-location-dot"></i>
+                        <input type="text" placeholder="Your location" id="location-input">
+                    </div>
+                    <div id="loading-status" class="loader" style="display: none;"></div>
+                </div>
+                <div class="hospitals-list">
+                    <div class="hospitals-header">
+                        <h3>Facilities Near You</h3>
+                        <div class="filter-options">
+                            <select id="facility-type">
+                                <option value="all">All Facilities</option>
+                                <option value="hospital">Hospitals</option>
+                                <option value="clinic">Clinics</option>
+                                <option value="pharmacy">Pharmacies</option>
+                            </select>
+                            <select id="distance">
+                                <option value="5">Within 5 km</option>
+                                <option value="10" selected>Within 10 km</option>
+                                <option value="15">Within 15 km</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="facilities-container">
+                        <!-- Facilities will be populated here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Wellness Works</h2>
+                <p>Our platform is designed to be simple and accessible for everyone, especially those in underserved communities.</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Share Your Location</h3>
+                    <p>Enter your current location or allow our app to automatically detect it.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Find Nearby Facilities</h3>
+                    <p>Instantly see all available hospitals, clinics, and pharmacies near you.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Emergency Support</h3>
+                    <p>Use our SOS button to quickly connect with ambulance services or find blood banks.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Get Directions</h3>
+                    <p>Get clear directions to the facility or contact them directly for assistance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>Wellness</h3>
+                    <p>Connecting underserved communities to quality healthcare across India.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#business-model">Our Model</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Emergency Services</a></li>
+                        <li><a href="#">Find Hospitals</a></li>
+                        <li><a href="#">Blood Banks</a></li>
+                        <li><a href="#">Pharmacies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@Wellness.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Wellness. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Emergency SOS Modal -->
+    <div class="modal" id="sos-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h3>Emergency Services</h3>
+                <p>Select the service you need urgently:</p>
+            </div>
+            <div class="emergency-options">
+                <div class="emergency-option" id="ambulance-option">
+                    <i class="fas fa-ambulance"></i>
+                    <h4>Ambulance</h4>
+                </div>
+                <div class="emergency-option" id="blood-option">
+                    <i class="fas fa-tint"></i>
+                    <h4>Blood Bank</h4>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p>Our team will contact you immediately after selection</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+
+            // Language selector
+            const languageSelector = document.getElementById('language');
+            languageSelector.addEventListener('change', function() {
+                // In a real implementation, this would change the site language
+                console.log('Language changed to: ' + this.value);
+                // You could redirect to language-specific versions or use i18n here
+            });
+
+            // Floating action button
+            const floatingAction = document.querySelector('.floating-action');
+            floatingAction.addEventListener('click', function() {
+                window.location.href = 'emergency.html';
+            });
+
+            // For demo purposes - smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Sample data for demonstration
+        const facilities = [
+            {
+                id: 1,
+                name: "City General Hospital",
+                type: "hospital",
+                address: "123 Healthcare Ave, Andheri East, Mumbai",
+                distance: "2.3 km",
+                phone: "+91 22 2345 6789",
+                available: true
+            },
+            {
+                id: 2,
+                name: "LifeCare Medical Center",
+                type: "hospital",
+                address: "456 Wellness Road, Dadar, Mumbai",
+                distance: "4.8 km",
+                phone: "+91 22 3456 7890",
+                available: true
+            },
+            {
+                id: 3,
+                name: "Community Health Clinic",
+                type: "clinic",
+                address: "789 Health Street, Bandra West, Mumbai",
+                distance: "3.1 km",
+                phone: "+91 22 4567 8901",
+                available: true
+            },
+            {
+                id: 4,
+                name: "MedPlus Pharmacy",
+                type: "pharmacy",
+                address: "321 Pharma Lane, Juhu, Mumbai",
+                distance: "1.5 km",
+                phone: "+91 22 5678 9012",
+                available: true
+            },
+            {
+                id: 5,
+                name: "Apollo Medical Center",
+                type: "hospital",
+                address: "567 Health Avenue, Goregaon, Mumbai",
+                distance: "6.7 km",
+                phone: "+91 22 6789 0123",
+                // Continuing the script tag content:
+
+                available: true
+            },
+            {
+                id: 6,
+                name: "Wellness Family Clinic",
+                type: "clinic",
+                address: "890 Medical Road, Powai, Mumbai",
+                distance: "5.2 km",
+                phone: "+91 22 7890 1234",
+                available: false
+            },
+            {
+                id: 7,
+                name: "Health First Pharmacy",
+                type: "pharmacy",
+                address: "432 Medicine Street, Malad, Mumbai",
+                distance: "8.3 km",
+                phone: "+91 22 8901 2345",
+                available: true
+            },
+            {
+                id: 8,
+                name: "Lifeline Emergency Hospital",
+                type: "hospital",
+                address: "765 Emergency Blvd, Chembur, Mumbai",
+                distance: "7.6 km",
+                phone: "+91 22 9012 3456",
+                available: true
+            }
+        ];
+
+        // DOM Elements
+        const facilitiesContainer = document.getElementById('facilities-container');
+        const facilityTypeFilter = document.getElementById('facility-type');
+        const distanceFilter = document.getElementById('distance');
+        const locationInput = document.getElementById('location-input');
+        const loadingStatus = document.getElementById('loading-status');
+        const sosBtn = document.getElementById('sos-btn');
+        const sosModal = document.getElementById('sos-modal');
+        const closeModal = document.querySelector('.close-modal');
+        const ambulanceOption = document.getElementById('ambulance-option');
+        const bloodOption = document.getElementById('blood-option');
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate facilities on page load
+            displayFacilities(facilities);
+            
+            // Event listeners
+            facilityTypeFilter.addEventListener('change', filterFacilities);
+            distanceFilter.addEventListener('change', filterFacilities);
+            locationInput.addEventListener('keyup', handleLocationSearch);
+            
+            // SOS button and modal
+            sosBtn.addEventListener('click', openSOSModal);
+            closeModal.addEventListener('click', closeSOSModal);
+            window.addEventListener('click', function(event) {
+                if (event.target === sosModal) {
+                    closeSOSModal();
+                }
+            });
+            
+            // Emergency options
+            ambulanceOption.addEventListener('click', function() {
+                handleEmergencySelection('ambulance');
+            });
+            
+            bloodOption.addEventListener('click', function() {
+                handleEmergencySelection('blood-bank');
+            });
+            
+            // Animate on scroll
+            const elements = document.querySelectorAll('.step-card, .model-card');
+            const animateObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        animateObserver.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            elements.forEach(element => {
+                animateObserver.observe(element);
+            });
+        });
+
+        // Display facilities based on current filters
+        function displayFacilities(facilitiesList) {
+            facilitiesContainer.innerHTML = '';
+            
+            if (facilitiesList.length === 0) {
+                facilitiesContainer.innerHTML = '<p class="no-results">No facilities match your criteria. Try adjusting your filters.</p>';
+                return;
+            }
+            
+            facilitiesList.forEach(facility => {
+                const facilityCard = document.createElement('div');
+                facilityCard.className = 'facility-card';
+                facilityCard.innerHTML = `
+                    <div class="facility-header">
+                        <div class="facility-name">${facility.name}</div>
+                        <div class="facility-distance">${facility.distance}</div>
+                    </div>
+                    <div class="facility-type">${capitalizeFirstLetter(facility.type)}</div>
+                    <div class="facility-address">${facility.address}</div>
+                    <div class="facility-contact">
+                        <div class="phone-number">${facility.phone}</div>
+                        <div class="availability ${facility.available ? '' : 'unavailable'}">
+                            ${facility.available ? 'Available Now' : 'Currently Busy'}
+                        </div>
+                    </div>
+                `;
+                
+                facilityCard.addEventListener('click', () => {
+                    showFacilityDetails(facility);
+                });
+                
+                facilitiesContainer.appendChild(facilityCard);
+            });
+        }
+
+        // Filter facilities based on type and distance
+        function filterFacilities() {
+            showLoading();
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                const selectedType = facilityTypeFilter.value;
+                const selectedDistance = parseInt(distanceFilter.value);
+                
+                let filteredFacilities = facilities.filter(facility => {
+                    // Filter by type
+                    if (selectedType !== 'all' && facility.type !== selectedType) {
+                        return false;
+                    }
+                    
+                    // Filter by distance
+                    const distanceValue = parseFloat(facility.distance);
+                    if (distanceValue > selectedDistance) {
+                        return false;
+                    }
+                    
+                    return true;
+                });
+                
+                displayFacilities(filteredFacilities);
+                hideLoading();
+            }, 800);
+        }
+
+        // Handle location search
+        function handleLocationSearch() {
+            if (locationInput.value.length > 2) {
+                showLoading();
+                
+                // Simulate location search
+                setTimeout(() => {
+                    // In a real app, this would call a geolocation API
+                    // For demo, we just shuffle the facilities
+                    const shuffledFacilities = [...facilities].sort(() => 0.5 - Math.random());
+                    displayFacilities(shuffledFacilities);
+                    hideLoading();
+                }, 1000);
+            }
+        }
+
+        // SOS Modal Functions
+        function openSOSModal() {
+            sosModal.style.display = 'flex';
+        }
+        
+        function closeSOSModal() {
+            sosModal.style.display = 'none';
+        }
+        
+        function handleEmergencySelection(type) {
+            // In a real app, this would trigger an emergency call
+            alert(`Emergency ${type} service has been notified. They will contact you immediately.`);
+            closeSOSModal();
+            
+            // Simulate finding nearest service
+            showLoading();
+            setTimeout(() => {
+                const emergencyFacilities = facilities.filter(f => 
+                    type === 'ambulance' ? f.type === 'hospital' : f.type === 'hospital'
+                ).sort((a, b) => {
+                    return parseFloat(a.distance) - parseFloat(b.distance);
+                });
+                
+                displayFacilities(emergencyFacilities);
+                hideLoading();
+                
+                // Show the closest facility at the top
+                if (emergencyFacilities.length > 0) {
+                    const firstFacility = document.querySelector('.facility-card');
+                    firstFacility.style.borderLeft = '4px solid var(--danger)';
+                    firstFacility.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 1500);
+        }
+
+        // Show facility details (in a real app, this would open a detailed view)
+        function showFacilityDetails(facility) {
+            alert(`
+                ${facility.name}
+                Type: ${capitalizeFirstLetter(facility.type)}
+                Address: ${facility.address}
+                Phone: ${facility.phone}
+                Distance: ${facility.distance}
+                Status: ${facility.available ? 'Available Now' : 'Currently Busy'}
+                
+                In a complete app, this would show more details and contact options.
+            `);
+        }
+
+        // Utility Functions
+        function showLoading() {
+            loadingStatus.style.display = 'block';
+        }
+        
+        function hideLoading() {
+            loadingStatus.style.display = 'none';
+        }
+        
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', function() {
+            nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth < 768) {
+                        nav.style.display = 'none';
+                    }
+                }
+            });
+        });
+
+        // Geolocation
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        // In a real app, this would fetch nearby facilities based on coordinates
+                        // For demo, we just update the input field
+                        locationInput.value = "Current location detected";
+                        handleLocationSearch();
+                    },
+                    (error) => {
+                        console.error("Error getting location:", error);
+                        alert("Could not detect your location. Please enter it manually.");
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Call getCurrentLocation on page load
+        setTimeout(getCurrentLocation, 2000);
+    </script>
+</body>
+</html>

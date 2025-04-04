@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness AI - Healthcare Assistant</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --secondary: #34a853;
+            --accent: #ea4335;
+            --light: #f8f9fa;
+            --dark: #202124;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1976d2, #64b5f6);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #0d62d0;
+        }
+        
+        .language-select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+        
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .feature-icon i {
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        /* Chat Assistant Section */
+        .chat-section {
+            padding: 80px 0;
+            background-color: #f0f4f8;
+        }
+        
+        .chat-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+        }
+        
+        .chat-info {
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .chat-info h2 {
+            margin-bottom: 20px;
+        }
+        
+        .chat-info p {
+            margin-bottom: 20px;
+        }
+        
+        .chat-box {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            height: 750px;
+            width: 1600px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chat-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .messages {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 70%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            position: relative;
+            line-height: 1.5;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--primary);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .bot-message {
+            align-self: flex-start;
+            background-color: #e9e9eb;
+            color: var(--dark);
+            border-bottom-left-radius: 5px;
+        }
+        
+        .chat-footer {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+            font-size: 16px;
+        }
+        
+        .send-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .send-btn:hover {
+            background-color: #0d62d0;
+        }
+        
+        .video-call-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .video-call-btn:hover {
+            background-color: #2d8b46;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 80px 0;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 30%;
+            right: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            background-color: #f0f4f8;
+            padding: 80px 0;
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .testimonial {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-details h4 {
+            margin-bottom: 5px;
+        }
+        
+        .user-details p {
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary) 0%, #0d62d0 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .cta h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .cta p {
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .cta-white {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: #bdbdbd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-bottom p {
+            color: #bdbdbd;
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        /* Typing indicator animation */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+        }
+        
+        .typing-indicator span {
+            opacity: 0.5;
+            animation: typingDot 1.4s infinite both;
+            margin-left: 2px;
+        }
+        
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingDot {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.5;
+            }
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .chat-container {
+                flex-direction: column;
+            }
+            
+            .chat-info {
+                max-width: 100%;
+            }
+            
+            .steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .step:not(:last-child)::after {
+                display: none;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <img src="./Images/logo.png">
+                    <h1>Wellness AI</h1>
+                </a>
+                <div class="nav-links">
+                    <a href="./index.html">Home</a>
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#testimonials">Testimonials</a>
+                    <a href="#contact">Contact</a>
+                    <select class="language-select">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="ta">தமிழ்</option>
+                        <option value="te">తెలుగు</option>
+                        <option value="bn">বাংলা</option>
+                        <option value="mr">मराठी</option>
+                    </select>
+                </div>
+                <button class="cta-button">Get Started</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>AI-Powered Healthcare in Your Language</h2>
+            <p>Access reliable health information, get medical assistance in your native language, and connect with healthcare professionals - all in one place.</p>
+            <button class="cta-button">Talk to Health Assistant</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Features</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4Z" stroke="#1a73e8" stroke-width="2"/>
+                            <path d="M8 11H16M12 7V15" stroke="#1a73e8" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>AI Health Assistant</h3>
+                    <p>Get answers to your health questions in your preferred language through our AI-powered assistant.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 10L19.553 7.724C19.7054 7.6472 19.8748 7.60852 20.0468 7.61058C20.2188 7.61265 20.387 7.65539 20.5374 7.73492C20.6878 7.81445 20.8155 7.92834 20.9095 8.06702C21.0035 8.2057 21.0611 8.36485 21.078 8.531L22 20H2L2.922 8.531C2.93889 8.36485 2.99652 8.2057 3.09048 8.06702C3.18443 7.92834 3.31215 7.81445 3.46259 7.73492C3.61303 7.65539 3.78116 7.61265 3.95316 7.61058C4.12515 7.60852 4.29463 7.6472 4.447 7.724L9 10" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="6" r="4" stroke="#1a73e8" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Professional Consultation</h3>
+                    <p>Connect with qualified healthcare professionals through video calls for personalized medical advice.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4V20M4 12H20" stroke="#1a73e8" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="12" cy="12" r="9" stroke="#1a73e8" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Multilingual Support</h3>
+                    <p>Our platform supports multiple Indian languages to break down language barriers in healthcare.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Assistant Section -->
+    <section class="chat-section" id="assistant">
+        <div class="container">
+            <div class="chat-container">
+                
+                <div class="chat-box">
+                    <div class="chat-header">
+                        <h3>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="9" stroke="white" stroke-width="2"/>
+                                <path d="M8 12H16M12 8V16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Wellness AI Assistant
+                        </h3>
+                        <select class="language-select">
+                            <option value="en">English</option>
+                            <option value="hi">हिंदी</option>
+                            <option value="ta">தமிழ்</option>
+                            <option value="te">తెలుగు</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="mr">मराठी</option>
+                        </select>
+                    </div>
+                    <div class="chat-body">
+                        <div class="messages">
+                            <div class="message bot-message">
+                                Hello! I'm your Wellness AI health assistant. How can I help you with your health concerns today?
+                            </div>
+                            <!-- More messages will be added dynamically -->
+                        </div>
+                    </div>
+                    <div class="chat-footer">
+                        <input type="text" class="chat-input" placeholder="Type your health question here...">
+                        <button class="send-btn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Language</h3>
+                    <p>Select from multiple Indian languages for comfortable communication.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Ask Your Question</h3>
+                    <p>Type your health-related question to the AI assistant.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Quick Response</h3>
+                    <p>Receive reliable health information and guidance instantly.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Consult if Needed</h3>
+                    <p>Schedule a video call with a healthcare professional for specialized advice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>User Testimonials</h2>
+            </div>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <p>"Wellness AI has been a lifesaver for my elderly parents who live in a remote village. They can ask health questions in Tamil and get immediate assistance without traveling to the city."</p>
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <img src="/api/placeholder/60/60" alt="User Avatar">
+                        </div>
+                        <div class="user-details">
+                            <h4>Rajesh Kumar</h4>
+                            <p>Chennai, Tamil Nadu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Take Control of Your Health Today</h2>
+            <p>Access reliable health information in your language, anytime, anywhere. Join thousands of users who trust Wellness AI for their healthcare needs.</p>
+            <div class="cta-buttons">
+                <button class="cta-button">Get Started Now</button>
+                <button class="cta-button cta-white">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+     <!-- Footer -->
+     <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>Wellness</h3>
+                    <p>Connecting underserved communities to quality healthcare across India.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#business-model">Our Model</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Emergency Services</a></li>
+                        <li><a href="#">Find Hospitals</a></li>
+                        <li><a href="#">Blood Banks</a></li>
+                        <li><a href="#">Pharmacies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Mumbai, Maharashtra, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@Wellness.org</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Wellness. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Add this script at the end of your HTML body
+
+// Gemini API Configuration
+const GEMINI_API_KEY = 'AIzaSyAj9NCp0-9909MPLfds93gsO_gANOITjQQ';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+// DOM Elements
+const chatInput = document.querySelector('.chat-input');
+const sendButton = document.querySelector('.send-btn');
+const messagesContainer = document.querySelector('.messages');
+const languageSelect = document.querySelector('.chat-header .language-select');
+
+// Medical context prompt to ensure responses stay within medical domain
+const MEDICAL_CONTEXT = `You are Wellness AI, an AI health assistant designed to provide general health information in multiple Indian languages. 
+Follow these guidelines:
+- Provide helpful, accurate health information based on medical knowledge
+- DO NOT answer non-medical questions - politely redirect to health topics
+- DO NOT diagnose specific conditions or prescribe treatments
+- For serious symptoms, ALWAYS advise consulting a healthcare professional
+- When asked about controversial topics or questions requiring doctor supervision, explain why you cannot answer and suggest consulting a professional
+- Keep responses concise, simple, and easy to understand
+- Be culturally sensitive to Indian healthcare context
+- DO NOT provide information about pregnancy termination, self-harm, or other controversial topics
+- When uncertain, acknowledge limitations and suggest professional consultation`;
+
+// Active language (default: English)
+let activeLanguage = 'en';
+
+// Listen for language changes
+languageSelect.addEventListener('change', (e) => {
+    activeLanguage = e.target.value;
+    // Add a system message about language change
+    addBotMessage(`I've switched to ${getLanguageName(activeLanguage)}. How can I help you?`);
+});
+
+// Maps language codes to full names
+function getLanguageName(code) {
+    const languages = {
+        'en': 'English',
+        'hi': 'हिंदी (Hindi)',
+        'ta': 'தமிழ் (Tamil)',
+        'te': 'తెలుగు (Telugu)',
+        'bn': 'বাংলা (Bengali)',
+        'mr': 'मराठी (Marathi)'
+    };
+    return languages[code] || 'English';
+}
+
+// Initialize the chat
+function initChat() {
+    // Event listeners
+    sendButton.addEventListener('click', handleSendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleSendMessage();
+        }
+    });
+
+    // Focus the input field
+    chatInput.focus();
+}
+
+// Handle sending a message
+function handleSendMessage() {
+    const message = chatInput.value.trim();
+    if (message.length === 0) return;
+    
+    // Add user message to chat
+    addUserMessage(message);
+    
+    // Clear input field
+    chatInput.value = '';
+    
+    // Show typing indicator
+    showTypingIndicator();
+    
+    // Get response from AI
+    getAIResponse(message);
+}
+
+// Add a user message to the chat
+function addUserMessage(message) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', 'user-message');
+    messageElement.textContent = message;
+    messagesContainer.appendChild(messageElement);
+    scrollToBottom();
+}
+
+// Add a bot message to the chat
+function addBotMessage(message) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', 'bot-message');
+    messageElement.textContent = message;
+    messagesContainer.appendChild(messageElement);
+    scrollToBottom();
+}
+
+// Show typing indicator
+function showTypingIndicator() {
+    const typingElement = document.createElement('div');
+    typingElement.classList.add('message', 'bot-message', 'typing-indicator');
+    typingElement.innerHTML = 'Typing<span>.</span><span>.</span><span>.</span>';
+    typingElement.id = 'typing-indicator';
+    messagesContainer.appendChild(typingElement);
+    scrollToBottom();
+}
+
+// Remove typing indicator
+function removeTypingIndicator() {
+    const typingElement = document.getElementById('typing-indicator');
+    if (typingElement) {
+        typingElement.remove();
+    }
+}
+
+// Scroll chat to bottom
+function scrollToBottom() {
+    const chatBody = document.querySelector('.chat-body');
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// Get AI response from Gemini API
+async function getAIResponse(userMessage) {
+    try {
+        // Create prompt based on active language
+        let languageInstruction = '';
+        if (activeLanguage !== 'en') {
+            languageInstruction = `Please respond in ${getLanguageName(activeLanguage)}.`;
+        }
+
+        const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: `${MEDICAL_CONTEXT}\n\n${languageInstruction}\n\nUser query: ${userMessage}`
+                    }]
+                }]
+            })
+        });
+
+        const data = await response.json();
+        
+        // Remove typing indicator
+        removeTypingIndicator();
+        
+        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+            const aiResponse = data.candidates[0].content.parts[0].text;
+            addBotMessage(aiResponse);
+        } else {
+            // Handle API error
+            addBotMessage("I'm having trouble connecting right now. Please try again later.");
+            console.error("API Response Error:", data);
+        }
+    } catch (error) {
+        // Remove typing indicator
+        removeTypingIndicator();
+        
+        // Handle error
+        addBotMessage("I'm having trouble connecting right now. Please try again later.");
+        console.error("API Error:", error);
+    }
+}
+
+// Video call button functionality
+//const videoCallBtn = document.querySelector('.video-call-btn');
+//videoCallBtn.addEventListener('click', () => {
+    // Create modal for booking appointment
+//    showAppointmentModal();
+//});
+
+// Show appointment booking modal
+function showAppointmentModal() {
+    // Create modal element
+    const modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.top = '0';
+    modal.style.left = '0';
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+    modal.style.zIndex = '1000';
+    
+    // Create modal content
+    const modalContent = document.createElement('div');
+    modalContent.style.backgroundColor = 'white';
+    modalContent.style.padding = '30px';
+    modalContent.style.borderRadius = '8px';
+    modalContent.style.maxWidth = '500px';
+    modalContent.style.width = '90%';
+    
+    // Add heading
+    const heading = document.createElement('h2');
+    heading.textContent = 'Schedule Video Consultation';
+    heading.style.marginBottom = '20px';
+    heading.style.color = 'var(--primary)';
+    
+    // Add form
+    const form = document.createElement('form');
+    form.innerHTML = `
+        <div style="margin-bottom: 15px;">
+            <label for="name" style="display: block; margin-bottom: 5px; font-weight: 500;">Your Name</label>
+            <input type="text" id="name" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="phone" style="display: block; margin-bottom: 5px; font-weight: 500;">Phone Number</label>
+            <input type="tel" id="phone" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="date" style="display: block; margin-bottom: 5px; font-weight: 500;">Preferred Date</label>
+            <input type="date" id="date" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="time" style="display: block; margin-bottom: 5px; font-weight: 500;">Preferred Time</label>
+            <select id="time" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required>
+                <option value="">Select Time</option>
+                <option value="9:00">9:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="12:00">12:00 PM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="16:00">4:00 PM</option>
+                <option value="17:00">5:00 PM</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="concern" style="display: block; margin-bottom: 5px; font-weight: 500;">Health Concern</label>
+            <textarea id="concern" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" required></textarea>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+            <button type="button" id="cancel-btn" style="padding: 10px 20px; border: 1px solid #ddd; background-color: white; border-radius: 4px; cursor: pointer;">Cancel</button>
+            <button type="submit" style="padding: 10px 20px; background-color: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer;">Schedule Call</button>
+        </div>
+    `;
+
+    
+    
+    // Add elements to DOM
+    modalContent.appendChild(heading);
+    modalContent.appendChild(form);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+    
+    // Handle form submission
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+        
+        // Show confirmation
+        modalContent.innerHTML = `
+            <h2 style="margin-bottom: 20px; color: var(--primary);">Appointment Confirmed</h2>
+            <p>Thank you, ${name}! Your video consultation has been scheduled for ${date} at ${time}.</p>
+            <p style="margin-top: 10px;">You will receive a confirmation SMS with details to join the call.</p>
+            <button id="close-btn" style="margin-top: 20px; padding: 10px 20px; background-color: var(--primary); color: white; border: none; border-radius: 4px; cursor: pointer;">Close</button>
+        `;
+        
+        // Add close button event listener
+        document.getElementById('close-btn').addEventListener('click', () => {
+            document.body.removeChild(modal);
+        });
+    });
+    
+    // Handle cancel button
+    document.getElementById('cancel-btn').addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
+}
+
+// Get Started buttons functionality
+const ctaButtons = document.querySelectorAll('.cta-button');
+ctaButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Scroll to chat section
+        document.getElementById('assistant').scrollIntoView({ behavior: 'smooth' });
+        // Focus on chat input
+        setTimeout(() => {
+            chatInput.focus();
+        }, 1000);
+    });
+});
+
+// Global language selector (in navbar)
+const navLanguageSelect = document.querySelector('.navbar .language-select');
+navLanguageSelect.addEventListener('change', (e) => {
+    // Update chat language select to match
+    languageSelect.value = e.target.value;
+    // Trigger the change event
+    const event = new Event('change');
+    languageSelect.dispatchEvent(event);
+});
+
+// Initialize the chat when the page loads
+document.addEventListener('DOMContentLoaded', initChat);
+    </script>
+</body>
+</html>
